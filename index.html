@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&family=Playfair+Display:wght@700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@700&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -21,41 +21,62 @@
     <main>
       <h3 class="seccion-titulo">Registro de Actividades</h3>
 
-      <div class="semana">
-        <h2>Semana 1: Fundamentos de Arduino</h2>
-        <p>
-          Introducción a la <strong>computación física</strong> y gestión de
-          hardware embebido. Se analizan la sintaxis básica, configuración del
-          entorno de desarrollo y esquemas de conexión para señales digitales.
-        </p>
+      <div class="carousel-container">
+        <button class="carousel-btn prev-btn" id="prevBtn" aria-label="Anterior">&#10094;</button>
+        
+        <div class="carousel-track-container">
+          <div class="carousel-track" id="carouselTrack">
+            
+            <div class="carousel-item" onclick="openModal('pdf', 'Documentos y capturas/arduinoDM.pdf', 'Introducción a Arduino')">
+              <div class="item-card">
+                <h2>Introducción a Arduino</h2>
+                <span class="view-more">Ver documento</span>
+              </div>
+            </div>
 
-        <div class="pdf-container">
-          <embed
-            src="Documentos y capturas/arduinoDM.pdf"
-            type="application/pdf"
-            width="100%"
-            height="750px"
-          />
+            <div class="carousel-item" onclick="openModal('video', 'recursos/Página Web  DM.mp4', 'Diseño de Página Web')">
+              <div class="item-card">
+                <h2>Diseño de Página Web</h2>
+                <span class="view-more">Ver video</span>
+              </div>
+            </div>
+
+            <div class="carousel-item" onclick="openModal('video', 'recursos/Primer Circuito  DM.mp4', 'Primer Circuito')">
+              <div class="item-card">
+                <h2>Primer Circuito</h2>
+                <span class="view-more">Ver video</span>
+              </div>
+            </div>
+
+            <div class="carousel-item" onclick="openModal('video', 'recursos/CircuitoLedRGB.mp4', 'Circuito LED RGB')">
+              <div class="item-card">
+                <h2>Circuito LED RGB</h2>
+                <span class="view-more">Ver video</span>
+              </div>
+            </div>
+
+            <div class="carousel-item" onclick="openModal('video', 'recursos/CircuitoFisico1.mp4', 'Circuito Físico 1')">
+              <div class="item-card">
+                <h2>Circuito Físico 1</h2>
+                <span class="view-more">Ver video</span>
+              </div>
+            </div>
+
+          </div>
         </div>
-      </div>
 
-      <div class="semana">
-        <h2>Semana 2: Multimedia y Optimización UI</h2>
-        <p>
-          Refactorización estética de la interfaz mediante
-          <strong>CSS3 avanzado</strong> e integración de recursos multimedia.
-          Incluye evidencia experimental del control de un
-          <strong>LED RGB</strong> mediante modulación PWM.
-        </p>
-
-        <div class="video-container">
-          <video controls width="100%">
-            <source src="recursos/CircuitoLedRGB.mp4" type="video/mp4" />
-            Navegador no compatible con video HTML5.
-          </video>
-        </div>
+        <button class="carousel-btn next-btn" id="nextBtn" aria-label="Siguiente">&#10095;</button>
       </div>
     </main>
+
+    <div id="projectModal" class="modal">
+      <div class="modal-content">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <h2 id="modalTitle" class="modal-title">Título del Proyecto</h2>
+        <div id="modalBody" class="modal-body">
+          </div>
+      </div>
+    </div>
 
     <footer>
       <span>2026 Douglas Mínchez</span>
@@ -66,5 +87,61 @@
         height="30px"
       />
     </footer>
+
+    <script>
+      // Funcionalidad de desplazamiento del Carrusel
+      const track = document.getElementById('carouselTrack');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+
+      if (track && prevBtn && nextBtn) {
+        prevBtn.addEventListener('click', () => {
+          track.scrollBy({ left: -320, behavior: 'smooth' });
+        });
+        nextBtn.addEventListener('click', () => {
+          track.scrollBy({ left: 320, behavior: 'smooth' });
+        });
+      }
+
+      // Funcionalidad de apertura de la Ventana Modal Interna
+      function openModal(type, src, title) {
+        const modal = document.getElementById('projectModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
+        
+        modalTitle.textContent = title;
+        modalBody.innerHTML = ''; // Limpiar contenedor anterior
+
+        if (type === 'pdf') {
+          modalBody.innerHTML = `<embed src="${src}" type="application/pdf" width="100%" height="650px" />`;
+        } else if (type === 'video') {
+          modalBody.innerHTML = `
+            <video controls width="100%" autoplay>
+              <source src="${src}" type="video/mp4">
+              Navegador no compatible con video HTML5.
+            </video>`;
+        }
+
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Deshabilita scroll de fondo
+      }
+
+      // Funcionalidad de cierre de la Ventana Modal
+      function closeModal() {
+        const modal = document.getElementById('projectModal');
+        const modalBody = document.getElementById('modalBody');
+        modalBody.innerHTML = ''; // Vacía el contenido para detener la reproducción de videos
+        modal.classList.remove('active');
+        document.body.style.overflow = ''; // Restaura scroll de fondo
+      }
+
+      // Cerrar si el usuario hace click fuera de la caja de contenido central
+      window.onclick = function(event) {
+        const modal = document.getElementById('projectModal');
+        if (event.target === modal) {
+          closeModal();
+        }
+      }
+    </script>
   </body>
 </html>
