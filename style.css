@@ -1,4 +1,4 @@
-/* --- VARIABLES DE COLOR ORIGINALES (MONOCROMÁTICAS / BLANCO Y NEGRO) --- */
+/* --- VARIABLES DE COLOR (PALETA EVERGREEN ADAPTADA) --- */
 :root {
     --bg-color: #0A100A;      
     --card-bg: #1F281A;       
@@ -9,7 +9,6 @@
     --overlay-bg: rgba(10, 16, 10, 0.85);
 }
 
-/* --- MODO CLARO ORIGINAL (Por si se activa con el botón) --- */
 body.dark-mode {
     --bg-color: #E3E8E3;
     --card-bg: #D2D7D2;
@@ -21,13 +20,19 @@ body.dark-mode {
 }
 
 /* --- ESTILOS BASE --- */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
 body {
     background-color: var(--bg-color);
     color: var(--main-text);
     font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    margin: 0;
     line-height: 1.6;
     overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
     transition: background-color 0.3s, color 0.3s;
 }
 
@@ -55,10 +60,11 @@ body {
     letter-spacing: 2px;
 }
 
-/* --- CONTENEDOR CARRUSEL (FILM STRIP) --- */
+/* --- CONTENEDOR CARRUSEL --- */
 .film-section {
     padding: 60px 0;
     position: relative;
+    flex: 1; /* Permite que el contenido empuje el footer al fondo si hay espacio */
 }
 
 .film-container {
@@ -99,8 +105,6 @@ body {
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
 }
 
-/* Renderizadores de vista previa dentro de la cinta */
-.film-item img, 
 .film-item .preview-video,
 .film-item .preview-pdf-placeholder {
     width: 100%;
@@ -111,14 +115,12 @@ body {
     transition: all 0.4s ease;
 }
 
-.film-item:hover img,
 .film-item:hover .preview-video,
 .film-item:hover .preview-pdf-placeholder {
     opacity: 0.9;
     filter: grayscale(20%) contrast(1);
 }
 
-/* Fallback estético para el PDF en la cinta */
 .preview-pdf-placeholder {
     display: flex;
     flex-direction: column;
@@ -133,7 +135,6 @@ body {
     margin-bottom: 5px;
 }
 
-/* Títulos flotantes idénticos sobre la cinta de película */
 .film-item__info {
     position: absolute;
     bottom: 0;
@@ -176,6 +177,30 @@ body {
     color: var(--bg-color);
 }
 
+/* --- FOOTER PERMANENTE --- */
+.footer {
+    padding: 40px 10%;
+    border-top: 1px solid var(--border-color);
+    background-color: rgba(10, 16, 10, 0.5);
+}
+
+.footer__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--secondary-text);
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+}
+
+.footer__logo {
+    width: 110px;
+    height: auto;
+    object-fit: contain;
+    filter: grayscale(1) brightness(0.8);
+    opacity: 0.6;
+}
+
 /* --- INTERRUPTOR DE TEMA --- */
 .theme-toggle {
     position: fixed;
@@ -191,7 +216,7 @@ body {
     z-index: 100;
 }
 
-/* --- MODAL / LIGHTBOX DE REFERENCIA --- */
+/* --- MODAL / LIGHTBOX --- */
 .modal {
     position: fixed;
     top: 0;
