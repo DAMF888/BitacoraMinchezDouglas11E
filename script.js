@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Corregidas las rutas problemáticas usando encodado seguro de URIs para los espacios vacíos dobles
+    // Array optimizado con los nuevos nombres de archivo limpios (Sin espacios ni caracteres especiales)
     const curatedLandscapes = [
-        { type: 'pdf', url: 'Documentos%20y%20capturas/arduinoDM.pdf', title: 'Introducción a Arduino', date: 'Semana 1' },
+        { type: 'pdf', url: 'Documentos y capturas/arduinoDM.pdf', title: 'Introducción a Arduino', date: 'Semana 1' },
         { type: 'video', url: 'recursos/PaginaWeb.mp4', title: 'Diseño de Página Web', date: 'Semana 2' },
         { type: 'video', url: 'recursos/PrimerCircuito.mp4', title: 'Primer Circuito', date: 'Semana 3' },
         { type: 'video', url: 'recursos/CircuitoLedRGB.mp4', title: 'Circuito LED RGB', date: 'Semana 4' },
@@ -12,13 +12,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('lightbox');
     const modalMediaWrapper = document.getElementById('modal-media-wrapper');
 
+    // Inyección de elementos en la cinta cinemática
     curatedLandscapes.forEach((item, i) => {
         const article = document.createElement('article');
         article.className = 'film-item';
         
         if (item.type === 'video') {
+            // Miniatura visual con soporte de carga nativa y fallback
             article.innerHTML = `
-                <video class="preview-video" muted loop playsinline>
+                <video class="preview-video" muted loop playsinline preload="metadata">
                     <source src="${item.url}" type="video/mp4">
                 </video>
                 <div class="film-item__info">
@@ -26,17 +28,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
             
-            // Intenta reproducir la vista previa al hacer hover (si el navegador lo permite)
+            // Intento seguro de reproducción en hover de la cinta
             article.addEventListener('mouseenter', () => {
                 const vid = article.querySelector('video');
-                vid.play().catch(() => {});
+                if (vid) vid.play().catch(() => {});
             });
             article.addEventListener('mouseleave', () => {
                 const vid = article.querySelector('video');
-                vid.pause();
-                vid.currentTime = 0;
+                if (vid) {
+                    vid.pause();
+                    vid.currentTime = 0;
+                }
             });
         } else {
+            // Estética simétrica para el documento PDF
             article.innerHTML = `
                 <div class="preview-pdf-placeholder">
                     <span>📄</span>
@@ -48,13 +53,20 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         }
 
+        // Evento interactivo para desplegar el recurso en pantalla completa
         article.onclick = () => {
-            modalMediaWrapper.innerHTML = ''; 
+            modalMediaWrapper.innerHTML = ''; // Limpieza de memoria
             
             if (item.type === 'pdf') {
                 modalMediaWrapper.innerHTML = `<embed src="${item.url}" type="application/pdf" />`;
             } else if (item.type === 'video') {
-                modalMediaWrapper.innerHTML = `<video controls autoplay><source src="${item.url}" type="video/mp4"></video>`;
+                // Atributos forzados para garantizar la reproducción automática tras la acción del usuario
+                modalMediaWrapper.innerHTML = `
+                    <video controls autoplay playsinline style="width:100%; height:100%;">
+                        <source src="${item.url}" type="video/mp4">
+                        Tu navegador no soporta video adaptativo.
+                    </video>
+                `;
             }
 
             document.getElementById('modal-title').textContent = item.title;
@@ -65,13 +77,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         filmStrip.appendChild(article);
         
+        // Animación de entrada cinemática fluida
         setTimeout(() => {
             article.style.opacity = '1';
             article.style.transform = 'translateY(0)';
         }, i * 150);
     });
 
-    // SISTEMA DE SCROLL SUAVE (EaseInOutQuad)
+    // FUNCIÓN DE DESPLAZAMIENTO FLUIDO (EaseInOutQuad)
     function smoothScroll(element, distance, duration) {
         const start = element.scrollLeft;
         const startTime = performance.now();
@@ -103,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
         smoothScroll(filmStrip, -step, 650);
     };
 
-    // BOTÓN MODO OSCURO / CLARO
+    // CONMUTADOR MODO CLARO / OSCURO (Mantiene persistencia en caché)
     const themeToggle = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-icon');
 
@@ -118,10 +131,10 @@ document.addEventListener('DOMContentLoaded', () => {
         themeIcon.textContent = '☀';
     }
 
-    // CONTROLES DE CIERRE MODAL
+    // INTERRUPTOR DE CIERRE PARA LA VENTANA MODAL
     const closeModal = () => {
         modal.style.display = 'none';
-        modalMediaWrapper.innerHTML = ''; 
+        modalMediaWrapper.innerHTML = ''; // Destruye el nodo para detener audios en segundo plano
         document.body.classList.remove('modal-open');
     };
 
