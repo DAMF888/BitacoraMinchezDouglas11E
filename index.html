@@ -3,145 +3,155 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bitácora Mínchez Douglas</title>
+    <title>Bitácora TICS | Mínchez Douglas</title>
     <link rel="icon" type="image/png" href="recursos/img/LC1.png" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <header>
-      <h1>Bitácora Segunda y Tercera Unidad</h1>
+    <header class="header">
+      <p class="header__subtitle">Ciclo Escolar 2026 — Segunda y Tercera Unidad</p>
+      <h1 class="header__title">Bitácora de Tecnología</h1>
+      <div class="header__line"></div>
     </header>
 
-    <main>
-      <h3 class="seccion-titulo">Registro de Actividades</h3>
-
-      <div class="carousel-container">
-        <button class="carousel-btn prev-btn" id="prevBtn" aria-label="Anterior">&#10094;</button>
+    <main class="film-section">
+      <div class="film-container">
+        <div id="film-strip" class="film-strip"></div>
         
-        <div class="carousel-track-container">
-          <div class="carousel-track" id="carouselTrack">
-            
-            <div class="carousel-item" onclick="openModal('pdf', 'Documentos y capturas/arduinoDM.pdf', 'Introducción a Arduino')">
-              <div class="item-card">
-                <h2>Introducción a Arduino</h2>
-                <span class="view-more">Ver documento</span>
-              </div>
-            </div>
-
-            <div class="carousel-item" onclick="openModal('video', 'recursos/Página Web  DM.mp4', 'Diseño de Página Web')">
-              <div class="item-card">
-                <h2>Diseño de Página Web</h2>
-                <span class="view-more">Ver video</span>
-              </div>
-            </div>
-
-            <div class="carousel-item" onclick="openModal('video', 'recursos/Primer Circuito  DM.mp4', 'Primer Circuito')">
-              <div class="item-card">
-                <h2>Primer Circuito</h2>
-                <span class="view-more">Ver video</span>
-              </div>
-            </div>
-
-            <div class="carousel-item" onclick="openModal('video', 'recursos/CircuitoLedRGB.mp4', 'Circuito LED RGB')">
-              <div class="item-card">
-                <h2>Circuito LED RGB</h2>
-                <span class="view-more">Ver video</span>
-              </div>
-            </div>
-
-            <div class="carousel-item" onclick="openModal('video', 'recursos/CircuitoFisico1.mp4', 'Circuito Físico 1')">
-              <div class="item-card">
-                <h2>Circuito Físico 1</h2>
-                <span class="view-more">Ver video</span>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <button class="carousel-btn next-btn" id="nextBtn" aria-label="Siguiente">&#10095;</button>
+        <button class="film-control prev" id="prevBtn" aria-label="Anterior">&#10094;</button>
+        <button class="film-control next" id="nextBtn" aria-label="Siguiente">&#10095;</button>
       </div>
     </main>
 
-    <div id="projectModal" class="modal">
-      <div class="modal-content">
-        <span class="close-modal" onclick="closeModal()">&times;</span>
-        <h2 id="modalTitle" class="modal-title">Título del Proyecto</h2>
-        <div id="modalBody" class="modal-body">
+    <div id="lightbox" class="modal">
+      <span class="modal__close" id="closeBtn">&times;</span>
+      <div class="modal__content">
+        <div id="modal-media-container" class="modal__media">
           </div>
+        <div class="modal__caption">
+          <h3 id="modal-title"></h3>
+          <p id="modal-date" class="modal__date"></p>
+          <p id="modal-desc">Evidencia digital y registro de desarrollo para la gestión y control del hardware/entorno web.</p>
+        </div>
       </div>
     </div>
 
-    <footer>
-      <span>2026 Douglas Mínchez</span>
-      <img
-        src="https://www.capouilliez.edu.gt/assets/img/logo.png"
-        alt="Logo Colegio"
-        width="115px"
-        height="30px"
-      />
+    <footer class="footer">
+      <div class="footer__content">
+        <span>© 2026 Douglas Mínchez</span>
+        <img
+          src="https://www.capouilliez.edu.gt/assets/img/logo.png"
+          alt="Logo Colegio"
+          class="footer__logo"
+        />
+      </div>
     </footer>
 
     <script>
-      // Funcionalidad de desplazamiento del Carrusel
-      const track = document.getElementById('carouselTrack');
-      const prevBtn = document.getElementById('prevBtn');
-      const nextBtn = document.getElementById('nextBtn');
+      document.addEventListener('DOMContentLoaded', () => {
+        // 1. Array de datos con el orden estricto solicitado y rutas de tu repositorio de GitHub
+        const proyectos = [
+          { type: 'pdf', url: 'Documentos y capturas/arduinoDM.pdf', title: 'Introducción a Arduino', date: 'Semana 1' },
+          { type: 'video', url: 'recursos/Página Web  DM.mp4', title: 'Diseño de Página Web', date: 'Semana 2' },
+          { type: 'video', url: 'recursos/Primer Circuito  DM.mp4', title: 'Primer Circuito', date: 'Semana 3' },
+          { type: 'video', url: 'recursos/CircuitoLedRGB.mp4', title: 'Circuito LED RGB', date: 'Semana 4' },
+          { type: 'video', url: 'recursos/CircuitoFisico1.mp4', title: 'Circuito Físico 1', date: 'Semana 5' }
+        ];
 
-      if (track && prevBtn && nextBtn) {
-        prevBtn.addEventListener('click', () => {
-          track.scrollBy({ left: -320, behavior: 'smooth' });
+        const filmStrip = document.getElementById('film-strip');
+        const modal = document.getElementById('lightbox');
+        const modalMedia = document.getElementById('modal-media-container');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDate = document.getElementById('modal-date');
+
+        // 2. Generación dinámica de la tira de items minimalistas
+        proyectos.forEach((item, i) => {
+          const article = document.createElement('article');
+          article.className = 'film-item';
+          
+          // Estructura estética interna: Tarjeta de texto estilizado
+          article.innerHTML = `
+            <div class="film-item__card">
+              <span class="film-item__meta">${item.date}</span>
+              <h2 class="film-item__title">${item.title}</h2>
+              <div class="film-item__action">Abrir Recurso</div>
+            </div>
+          `;
+          
+          // Evento click adaptado al visor modal integrado
+          article.onclick = () => {
+            modalMedia.innerHTML = ''; // Limpiar contenido anterior
+            
+            if (item.type === 'pdf') {
+              modalMedia.innerHTML = `<embed src="${item.url}" type="application/pdf" width="100%" height="100%" />`;
+            } else if (item.type === 'video') {
+              modalMedia.innerHTML = `<video controls autoplay class="modal-video-player"><source src="${item.url}" type="video/mp4">Navegador no compatible.</video>`;
+            }
+            
+            modalTitle.textContent = item.title;
+            modalDate.textContent = item.date;
+            modal.style.display = 'flex';
+            document.body.classList.add('modal-open');
+          };
+
+          filmStrip.appendChild(article);
+
+          // Animación refinada de entrada (Fade-in escalonado)
+          setTimeout(() => {
+            article.style.opacity = '1';
+            article.style.transform = 'translateY(0)';
+          }, i * 150);
         });
-        nextBtn.addEventListener('click', () => {
-          track.scrollBy({ left: 320, behavior: 'smooth' });
-        });
-      }
 
-      // Funcionalidad de apertura de la Ventana Modal Interna
-      function openModal(type, src, title) {
-        const modal = document.getElementById('projectModal');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalBody = document.getElementById('modalBody');
-        
-        modalTitle.textContent = title;
-        modalBody.innerHTML = ''; // Limpiar contenedor anterior
+        /**
+         * FUNCIÓN DE SCROLL MATEMÁTICO CINEMÁTICO (EaseInOutQuad)
+         */
+        function smoothScroll(element, distance, duration) {
+          const start = element.scrollLeft;
+          const startTime = performance.now();
 
-        if (type === 'pdf') {
-          modalBody.innerHTML = `<embed src="${src}" type="application/pdf" width="100%" height="650px" />`;
-        } else if (type === 'video') {
-          modalBody.innerHTML = `
-            <video controls width="100%" autoplay>
-              <source src="${src}" type="video/mp4">
-              Navegador no compatible con video HTML5.
-            </video>`;
+          function animate(currentTime) {
+            const timeElapsed = currentTime - startTime;
+            const progress = Math.min(timeElapsed / duration, 1);
+            
+            const ease = progress < 0.5 
+              ? 2 * progress * progress 
+              : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+
+            element.scrollLeft = start + distance * ease;
+
+            if (timeElapsed < duration) {
+              requestAnimationFrame(animate);
+            }
+          }
+          requestAnimationFrame(animate);
         }
 
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Deshabilita scroll de fondo
-      }
+        // Configuración de distancia del salto del carrusel basado en dimensiones CSS
+        const step = 410; 
 
-      // Funcionalidad de cierre de la Ventana Modal
-      function closeModal() {
-        const modal = document.getElementById('projectModal');
-        const modalBody = document.getElementById('modalBody');
-        modalBody.innerHTML = ''; // Vacía el contenido para detener la reproducción de videos
-        modal.classList.remove('active');
-        document.body.style.overflow = ''; // Restaura scroll de fondo
-      }
+        document.getElementById('nextBtn').onclick = () => {
+          smoothScroll(filmStrip, step, 650);
+        };
 
-      // Cerrar si el usuario hace click fuera de la caja de contenido central
-      window.onclick = function(event) {
-        const modal = document.getElementById('projectModal');
-        if (event.target === modal) {
-          closeModal();
-        }
-      }
+        document.getElementById('prevBtn').onclick = () => {
+          smoothScroll(filmStrip, -step, 650);
+        };
+
+        // Funciones de cierre del Visor Modular
+        const clearAndCloseModal = () => {
+          modal.style.display = 'none';
+          modalMedia.innerHTML = ''; // Destruye el video/pdf activo para cortar el audio
+          document.body.classList.remove('modal-open');
+        };
+
+        document.getElementById('closeBtn').onclick = clearAndCloseModal;
+        window.onclick = (e) => { if (e.target === modal) clearAndCloseModal(); };
+      });
     </script>
   </body>
 </html>
