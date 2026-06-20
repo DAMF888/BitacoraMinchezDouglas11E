@@ -2,8 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Corregidas las rutas problemáticas usando encodado seguro de URIs para los espacios vacíos dobles
     const curatedLandscapes = [
         { type: 'pdf', url: 'Documentos%20y%20capturas/arduinoDM.pdf', title: 'Introducción a Arduino', date: 'Semana 1' },
-        { type: 'video', url: 'recursos/Página%20Web%20%20DM.mp4', title: 'Diseño de Página Web', date: 'Semana 2' },
-        { type: 'video', url: 'recursos/Primer%20Circuito%20%20DM.mp4', title: 'Primer Circuito', date: 'Semana 3' },
+        { type: 'video', url: 'recursos/PaginaWeb.mp4', title: 'Diseño de Página Web', date: 'Semana 2' },
+        { type: 'video', url: 'recursos/PrimerCircuito.mp4', title: 'Primer Circuito', date: 'Semana 3' },
         { type: 'video', url: 'recursos/CircuitoLedRGB.mp4', title: 'Circuito LED RGB', date: 'Semana 4' },
         { type: 'video', url: 'recursos/CircuitoFisico1.mp4', title: 'Circuito Físico 1', date: 'Semana 5' }
     ];
