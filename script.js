@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Array estructurado con el orden de prioridades y rutas exactas fijadas en tu GitHub
+    // Corregidas las rutas problemáticas usando encodado seguro de URIs para los espacios vacíos dobles
     const curatedLandscapes = [
-        { type: 'pdf', url: 'Documentos y capturas/arduinoDM.pdf', title: 'Introducción a Arduino', date: 'Semana 1' },
-        { type: 'video', url: 'recursos/Página Web  DM.mp4', title: 'Diseño de Página Web', date: 'Semana 2' },
-        { type: 'video', url: 'recursos/Primer Circuito  DM.mp4', title: 'Primer Circuito', date: 'Semana 3' },
+        { type: 'pdf', url: 'Documentos%20y%20capturas/arduinoDM.pdf', title: 'Introducción a Arduino', date: 'Semana 1' },
+        { type: 'video', url: 'recursos/Página%20Web%20%20DM.mp4', title: 'Diseño de Página Web', date: 'Semana 2' },
+        { type: 'video', url: 'recursos/Primer%20Circuito%20%20DM.mp4', title: 'Primer Circuito', date: 'Semana 3' },
         { type: 'video', url: 'recursos/CircuitoLedRGB.mp4', title: 'Circuito LED RGB', date: 'Semana 4' },
         { type: 'video', url: 'recursos/CircuitoFisico1.mp4', title: 'Circuito Físico 1', date: 'Semana 5' }
     ];
@@ -12,12 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('lightbox');
     const modalMediaWrapper = document.getElementById('modal-media-wrapper');
 
-    // Inyección pura estilo "film-item" tal como la referencia
     curatedLandscapes.forEach((item, i) => {
         const article = document.createElement('article');
         article.className = 'film-item';
         
-        // Renderiza el contenido correspondiente en miniatura cinemática
         if (item.type === 'video') {
             article.innerHTML = `
                 <video class="preview-video" muted loop playsinline>
@@ -27,15 +25,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     <h3>${item.title}</h3>
                 </div>
             `;
-            // Pequeña reproducción opcional al pasar el mouse por encima
-            article.addEventListener('mouseenter', () => article.querySelector('video').play().catch(()=>{}));
+            
+            // Intenta reproducir la vista previa al hacer hover (si el navegador lo permite)
+            article.addEventListener('mouseenter', () => {
+                const vid = article.querySelector('video');
+                vid.play().catch(() => {});
+            });
             article.addEventListener('mouseleave', () => {
-                const v = article.querySelector('video');
-                v.pause();
-                v.currentTime = 0;
+                const vid = article.querySelector('video');
+                vid.pause();
+                vid.currentTime = 0;
             });
         } else {
-            // Placeholder visual para mantener simétrica la tira de película con el PDF
             article.innerHTML = `
                 <div class="preview-pdf-placeholder">
                     <span>📄</span>
@@ -47,9 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         }
 
-        // Evento de apertura idéntico asignando el viewport activo
         article.onclick = () => {
-            modalMediaWrapper.innerHTML = ''; // Reset preventivo
+            modalMediaWrapper.innerHTML = ''; 
             
             if (item.type === 'pdf') {
                 modalMediaWrapper.innerHTML = `<embed src="${item.url}" type="application/pdf" />`;
@@ -71,9 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, i * 150);
     });
 
-    /**
-     * FUNCIÓN DE SCROLL PERSONALIZADA (EaseInOutQuad) - IDÉNTICA A LA REFERENCIA
-     */
+    // SISTEMA DE SCROLL SUAVE (EaseInOutQuad)
     function smoothScroll(element, distance, duration) {
         const start = element.scrollLeft;
         const startTime = performance.now();
@@ -105,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         smoothScroll(filmStrip, -step, 650);
     };
 
-    // Control del Switch de Modo Claro/Oscuro alternable
+    // BOTÓN MODO OSCURO / CLARO
     const themeToggle = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-icon');
 
@@ -120,10 +118,10 @@ document.addEventListener('DOMContentLoaded', () => {
         themeIcon.textContent = '☀';
     }
 
-    // Funciones de Cierre Limpias del Lightbox
+    // CONTROLES DE CIERRE MODAL
     const closeModal = () => {
         modal.style.display = 'none';
-        modalMediaWrapper.innerHTML = ''; // Corta de golpe audio/video
+        modalMediaWrapper.innerHTML = ''; 
         document.body.classList.remove('modal-open');
     };
 
