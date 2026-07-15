@@ -1,9 +1,9 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Array optimizado con los nuevos nombres de archivo limpios (Sin espacios ni caracteres especiales)
     const curatedLandscapes = [
         { type: 'pdf', url: 'Documentos y capturas/arduinoDM.pdf', title: 'Introducción a Arduino', date: 'Semana 1' },
         { type: 'video', url: 'recursos/CircuitoLedRGB.mp4', title: 'Circuito LED RGB', date: 'Semana 4' },
         { type: 'video', url: 'recursos/CircuitoFisico1.mp4', title: 'Circuito Físico 1', date: 'Semana 5' },
+        { type: 'video', url: 'recursos/Semaforo.mp4', title: 'Circuito de Semáforo', date: 'Semana 6' },
+        { type: 'video', url: 'recursos/3LEDS.mp4', title: 'Encender 3 LEDs en Serie', date: 'Semana 7' }
     ];
 
     const filmStrip = document.getElementById('film-strip');
