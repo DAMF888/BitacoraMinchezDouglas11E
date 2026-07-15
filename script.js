@@ -1,3 +1,6 @@
+document.addEventListener('DOMContentLoaded', () => {
+    // Array con todos tus archivos multimedia.
+    // IMPORTANTE: Asegúrate de que las extensiones (.mp4 o .MOV) coincidan exactamente con las de tus archivos reales en GitHub.
     const curatedLandscapes = [
         { type: 'pdf', url: 'Documentos y capturas/arduinoDM.pdf', title: 'Introducción a Arduino', date: 'Semana 1' },
         { type: 'video', url: 'recursos/CircuitoLedRGB.mp4', title: 'Circuito LED RGB', date: 'Semana 4' },
