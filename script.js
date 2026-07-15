@@ -4,8 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
         { type: 'pdf', url: 'Documentos y capturas/arduinoDM.pdf', title: 'Introducción a Arduino', date: 'Semana 1' },
         { type: 'video', url: 'recursos/CircuitoLedRGB.mp4', title: 'Circuito LED RGB', date: 'Semana 4' },
         { type: 'video', url: 'recursos/CircuitoFisico1.mp4', title: 'Circuito Físico 1', date: 'Semana 5' },
-        { type: 'video', url: 'recursos/Encender y apagar 3LEDs.MOV', title: 'Circuito Físico 2', date: 'Semana 6' }
-
     ];
 
     const filmStrip = document.getElementById('film-strip');
