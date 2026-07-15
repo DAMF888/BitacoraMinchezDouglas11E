@@ -75,10 +75,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         filmStrip.appendChild(article);
         
-        // Animación de entrada cinemática fluida
+        // Animación de entrada cinemática fluida activando la clase CSS .is-visible
         setTimeout(() => {
-            article.style.opacity = '1';
-            article.style.transform = 'translateY(0)';
+            article.classList.add('is-visible');
         }, i * 150);
     });
 
