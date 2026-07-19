@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
-// Array optimizado con el nuevo orden de semanas y el Sensor Ultrasónico
+    // Array optimizado con el nuevo orden de semanas y el Sensor Ultrasónico
     const curatedLandscapes = [
         { type: 'pdf', url: 'Documentos y capturas/arduinoDM.pdf', title: 'Introducción a Arduino', date: 'Semana 1' },
-        { type: 'video', url: 'recursos/CircuitoLedRGB.mp4', title: 'Circuito LED RGB', date: 'Semana 3' },
-        { type: 'video', url: 'recursos/CircuitoFisico1.mp4', title: 'Circuito Físico 1', date: 'Semana 4' },
+        { type: 'video', url: 'recursos/CircuitoLedRGB.mp4', title: 'Circuito LED RGB', date: 'Semana 4' },
+        { type: 'video', url: 'recursos/CircuitoFisico1.mp4', title: 'Circuito Físico 1', date: 'Semana 5' },
         { type: 'video', url: 'recursos/Semaforo.mp4', title: 'Circuito de Semáforo', date: 'Semana 5' },
         { type: 'video', url: 'recursos/3LEDS.mp4', title: 'Encender 3 LEDs en Serie', date: 'Semana 5' },
         { type: 'video', url: 'recursos/SensorUltrasonico.mp4', title: 'Sensor Ultrasónico', date: 'Semana 6' }
@@ -61,13 +61,20 @@ document.addEventListener('DOMContentLoaded', () => {
             if (item.type === 'pdf') {
                 modalMediaWrapper.innerHTML = `<embed src="${item.url}" type="application/pdf" />`;
             } else if (item.type === 'video') {
-                // Atributos forzados para garantizar la reproducción automática tras la acción del usuario
-                modalMediaWrapper.innerHTML = `
-                    <video controls autoplay playsinline style="width:100%; height:100%;">
-                        <source src="${item.url}" type="video/mp4">
-                        Tu navegador no soporta video adaptativo.
-                    </video>
-                `;
+                // TRUCO DE COMPATIBILIDAD: Si es el video del sensor, usamos iframe para saltar el bloqueo de codec de Apple
+                if (item.url.includes('SensorUltrasonico')) {
+                    modalMediaWrapper.innerHTML = `
+                        <iframe src="${item.url}" style="width:100%; height:100%; border:none;"></iframe>
+                    `;
+                } else {
+                    // Renderizado normal para tus otros videos estándar
+                    modalMediaWrapper.innerHTML = `
+                        <video controls autoplay playsinline style="width:100%; height:100%;">
+                            <source src="${item.url}" type="video/mp4">
+                            Tu navegador no soporta video adaptativo.
+                        </video>
+                    `;
+                }
             }
 
             document.getElementById('modal-title').textContent = item.title;
