@@ -1,12 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Array optimizado con el nuevo orden de semanas y el Sensor Ultrasónico
+    // Array optimizado con la cronología actualizada hasta la Semana 7
     const curatedLandscapes = [
         { type: 'pdf', url: 'Documentos y capturas/arduinoDM.pdf', title: 'Introducción a Arduino', date: 'Semana 1' },
         { type: 'video', url: 'recursos/CircuitoLedRGB.mp4', title: 'Circuito LED RGB', date: 'Semana 4' },
         { type: 'video', url: 'recursos/CircuitoFisico1.mp4', title: 'Circuito Físico 1', date: 'Semana 5' },
         { type: 'video', url: 'recursos/Semaforo.mp4', title: 'Circuito de Semáforo', date: 'Semana 5' },
         { type: 'video', url: 'recursos/3LEDS.mp4', title: 'Encender 3 LEDs en Serie', date: 'Semana 5' },
-        { type: 'video', url: 'recursos/SensorUltrasonico.mp4', title: 'Sensor Ultrasónico', date: 'Semana 6' }
+        { type: 'video', url: 'recursos/SensorUltrasonico.mp4', title: 'Sensor Ultrasónico', date: 'Semana 6' },
+        { type: 'video', url: 'recursos/Sensor PIR.mp4', title: 'Sensor PIR (Movimiento)', date: 'Semana 7' }
     ];
 
     const filmStrip = document.getElementById('film-strip');
@@ -61,8 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (item.type === 'pdf') {
                 modalMediaWrapper.innerHTML = `<embed src="${item.url}" type="application/pdf" />`;
             } else if (item.type === 'video') {
-                // TRUCO DE COMPATIBILIDAD: Si es el video del sensor, usamos iframe para saltar el bloqueo de codec de Apple
-                if (item.url.includes('SensorUltrasonico')) {
+                // TRUCO DE COMPATIBILIDAD: Para los sensores (Ultrasonico y PIR) usamos iframe para evitar bloqueos de codec
+                if (item.url.includes('SensorUltrasonico') || item.url.includes('Sensor PIR')) {
                     modalMediaWrapper.innerHTML = `
                         <iframe src="${item.url}" style="width:100%; height:100%; border:none;"></iframe>
                     `;
