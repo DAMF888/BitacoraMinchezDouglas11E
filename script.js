@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
         { type: 'video', url: 'recursos/Sensor PIR.mp4', title: 'Sensor PIR (Movimiento)', date: 'Semana 7' },
         { type: 'video', url: 'recursos/Suficiencia3UDM.mp4', title: 'Suficiencia (Simulación)', date: 'Semana 8' },
         { type: 'video', url: 'recursos/SuficienciaEnClase.mp4', title: 'Suficiencia en Clase', date: 'Semana 1 U4' }
+        { type: 'video', url: 'recursos/CircuitoDos4U', title: 'Circuito 2 | 4U', date: 'Semana 2 U4' }
+
     ];
 
     const filmStrip = document.getElementById('film-strip');
