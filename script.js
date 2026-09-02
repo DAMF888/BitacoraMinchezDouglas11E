@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Array optimizado con la cronología completa de la Unidad 4
+    // Array optimizado con la cronología completa incluyendo Suficiencia en Clase
     const curatedLandscapes = [
         { type: 'pdf', url: 'Documentos y capturas/arduinoDM.pdf', title: 'Introducción a Arduino', date: 'Semana 1' },
         { type: 'video', url: 'recursos/CircuitoLedRGB.mp4', title: 'Circuito LED RGB', date: 'Semana 4' },
@@ -9,8 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { type: 'video', url: 'recursos/SensorUltrasonico.mp4', title: 'Sensor Ultrasónico', date: 'Semana 6' },
         { type: 'video', url: 'recursos/Sensor PIR.mp4', title: 'Sensor PIR (Movimiento)', date: 'Semana 7' },
         { type: 'video', url: 'recursos/Suficiencia3UDM.mp4', title: 'Suficiencia (Simulación)', date: 'Semana 8' },
-        { type: 'video', url: 'recursos/SuficienciaEnClase.mp4', title: 'Suficiencia en Clase', date: 'Semana 1 U4' },
-        { type: 'video', url: 'recursos/CircuitoDos4U.mp4', title: 'Circuito 2 | 4U', date: 'Semana 2 U4' }
+        { type: 'video', url: 'recursos/SuficienciaEnClase.mp4', title: 'Suficiencia en Clase', date: 'Semana 8' }
     ];
 
     const filmStrip = document.getElementById('film-strip');
@@ -65,8 +64,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (item.type === 'pdf') {
                 modalMediaWrapper.innerHTML = `<embed src="${item.url}" type="application/pdf" />`;
             } else if (item.type === 'video') {
-                // TRUCO DE COMPATIBILIDAD: Para los videos recientes usados en Windows (Sensores, Suficiencia y U4)
-                if (item.url.includes('SensorUltrasonico') || item.url.includes('Sensor PIR') || item.url.includes('Suficiencia3UDM') || item.url.includes('SuficienciaEnClase') || item.url.includes('CircuitoDos4U')) {
+                // TRUCO DE COMPATIBILIDAD: Para los videos recientes usados en Windows (Sensores y Suficiencia)
+                if (item.url.includes('SensorUltrasonico') || item.url.includes('Sensor PIR') || item.url.includes('Suficiencia3UDM') || item.url.includes('SuficienciaEnClase')) {
                     modalMediaWrapper.innerHTML = `
                         <iframe src="${item.url}" style="width:100%; height:100%; border:none;"></iframe>
                     `;
