@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (item.type === 'pdf') {
                 modalMediaWrapper.innerHTML = `<embed src="${item.url}" type="application/pdf" />`;
             } else if (item.type === 'video') {
-                // TRUCO DE COMPATIBILIDAD: Para los videos recientes usados en Windows (Sensores, Suficiencia y Unidad 4)
+                // TRUCO DE COMPATIBILIDAD: Para los videos recientes usados en Windows (Sensores, Suficiencia y U4)
                 if (item.url.includes('SensorUltrasonico') || item.url.includes('Sensor PIR') || item.url.includes('Suficiencia3UDM') || item.url.includes('SuficienciaEnClase') || item.url.includes('CircuitoDos4U')) {
                     modalMediaWrapper.innerHTML = `
                         <iframe src="${item.url}" style="width:100%; height:100%; border:none;"></iframe>
